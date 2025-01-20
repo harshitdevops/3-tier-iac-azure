@@ -18,7 +18,7 @@ variables:
    value: 'terraform-backend'
 
  - name: 'backend_storageaccount'
-   value: 'terraformbackend2025'
+   value: 'terraformbackendhar2025'
 
  - name: 'backend_container'
    value: 'terraform'

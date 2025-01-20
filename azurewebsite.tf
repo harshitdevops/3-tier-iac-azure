@@ -1,31 +1,31 @@
 #Frontend
 # Create the web app, pass in the App Service Plan ID
 resource "azurerm_linux_web_app" "frontend-webapp" {
-  name                = "frontend-webapp"
+  name                = "frontend-webapp-har-2025"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.frontend-asp.id
   https_only          = true
   site_config {
     minimum_tls_version = "1.2"
-    always_on           = true    # Must only be false when using free or shared service plans
+    always_on           = true # Must only be false when using free or shared service plans
 
     application_stack {
-      node_version = "20-lts"     # Version 20 long term support
+      node_version = "20-lts" # Version 20 long term support
     }
   }
 
-#App Settings for Application insight
-  app_settings = {                #A map of key-value pairs of App Settings
+  #App Settings for Application insight
+  app_settings = { #A map of key-value pairs of App Settings
 
-    "APPINSIGHTS_INSTRUMENTATIONKEY"             = azurerm_application_insights.ok-appinsights.instrumentation_key    # Connecting the app to Application insights
-    "APPINSIGHTS_PROFILERFEATURE_VERSION"        = "1.0.0"                                                            # Profiler to identify code that slowed down web app
-    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~3"                                                               # Insight agent that collects telemetry, version 3
-  } 
+    "APPINSIGHTS_INSTRUMENTATIONKEY"             = azurerm_application_insights.ok-appinsights.instrumentation_key # Connecting the app to Application insights
+    "APPINSIGHTS_PROFILERFEATURE_VERSION"        = "1.0.0"                                                         # Profiler to identify code that slowed down web app
+    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~3"                                                            # Insight agent that collects telemetry, version 3
+  }
 
-#Allows the web app to use other azure services without needing to manage credentials (long version for github, short for actual code)
+  #Allows the web app to use other azure services without needing to manage credentials (long version for github, short for actual code)
   identity {
-    type = "SystemAssigned"          #The identity is only valid for the lifespan of the resource
+    type = "SystemAssigned" #The identity is only valid for the lifespan of the resource
   }
 
 
@@ -45,7 +45,7 @@ resource "azurerm_storage_account" "fn-storageaccount" {
 }
 
 resource "azurerm_linux_function_app" "backend-fnapp" {
-  name                = "backend-functionapp"
+  name                = "backend-functionapp-har-2025"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -53,12 +53,12 @@ resource "azurerm_linux_function_app" "backend-fnapp" {
   storage_account_access_key = azurerm_storage_account.fn-storageaccount.primary_access_key
   service_plan_id            = azurerm_service_plan.backend-asp.id
 
-#App Settings for Application insight
-  app_settings = {               #A map of key-value pairs of App Settings   
+  #App Settings for Application insight
+  app_settings = { #A map of key-value pairs of App Settings   
 
-    "APPINSIGHTS_INSTRUMENTATIONKEY"             = azurerm_application_insights.ok-appinsights.instrumentation_key      # Connecting the app to Application insights
-    "APPINSIGHTS_PROFILERFEATURE_VERSION"        = "1.0.0"                                                              # Profiler to identify code that slowed down web app
-    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~3"                                                                 # Insight agent that collects telemetry, version 3
+    "APPINSIGHTS_INSTRUMENTATIONKEY"             = azurerm_application_insights.ok-appinsights.instrumentation_key # Connecting the app to Application insights
+    "APPINSIGHTS_PROFILERFEATURE_VERSION"        = "1.0.0"                                                         # Profiler to identify code that slowed down web app
+    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~3"                                                            # Insight agent that collects telemetry, version 3
 
 
   }
@@ -71,7 +71,7 @@ resource "azurerm_linux_function_app" "backend-fnapp" {
       name                      = "Frontend access only"
     }
     application_stack {
-      python_version = 3.12    # Latest version at the time of creation
+      python_version = 3.12 # Latest version at the time of creation
     }
   }
 

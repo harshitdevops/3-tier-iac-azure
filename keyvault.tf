@@ -1,4 +1,4 @@
-data "azurerm_client_config" "current" {}  #Use to access the configuration of the AzureRM provider
+data "azurerm_client_config" "current" {} #Use to access the configuration of the AzureRM provider
 
 resource "azurerm_key_vault" "ok-keyvault" {
   name                        = "okkeyvaulttest"
@@ -42,9 +42,9 @@ resource "azurerm_key_vault_access_policy" "kv_access_policy_me" {
 
 # Retrieve the managed identity's principal ID (object_id)
 resource "azurerm_key_vault_access_policy" "kv_access_policy_web_app" {
-  key_vault_id  = azurerm_key_vault.ok-keyvault.id
-  tenant_id     = "data.azurerm_client_config.current.tenant_id"
-  object_id     = azurerm_linux_web_app.frontend-webapp.identity[0].principal_id
+  key_vault_id = azurerm_key_vault.ok-keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_linux_web_app.frontend-webapp.identity[0].principal_id
 
   key_permissions    = ["Get", "List", "Update", "Delete"]
   secret_permissions = ["Get", "List", "Set", "Delete"]
