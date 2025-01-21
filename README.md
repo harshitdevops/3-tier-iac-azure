@@ -54,7 +54,7 @@ This architecture represents a secure, scalable deployment for modern applicatio
       This file defines the Azure Resource Group where all other resources are provisioned. Tags are also added for environment and team categorization.
 
 **Outputs** - [outputs.tf](https://github.com/harshitdevops/3-tier-iac-azure/blob/main//Terraform%20Files/outputs.tf)
-      This file provides output values that are useful for interacting with the infrastructure. It outputs the resource group ID, the URLs for both the frontend and backend apps, and the Application Insights instrumentation key.
+      This file provides output values that are useful for interacting with the infrastructure. It outputs the resource group ID, the URLs for both the frontend and backend apps.
     
 **Variables** - [variables.tf](https://github.com/harshitdevops/3-tier-iac-azure/blob/main//Terraform%20Files/variables.tf)
       This file declares variables used across other Terraform files, such as the resource_group_name and location. It allows for easy customization by centralizing configuration values.
