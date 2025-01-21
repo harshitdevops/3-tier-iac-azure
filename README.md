@@ -3,40 +3,31 @@
 # Overview of the 3-Tier Architecture
 This architecture represents a secure, scalable deployment for modern applications in Azure, consisting of Frontend (Presentation), Backend (Application Logic), and Database (Data) tiers, all integrated into a Virtual Network (VNet). It is provisioned using Terraform for infrastructure as code.
 
-# 1. Frontend Tier
+**1. Frontend Tier**
 Service: Azure App Service (Web App).
 Role: Serves the user interface of the application.
-VNet Integration:
-Deployed in the frontend-subnet (address space: 10.0.0.0/26) of a shared VNet.
-Integrated with the Microsoft.Web service endpoint, ensuring secure private communication with other Azure services.
-Access Control:
-Public access is restricted to specific IP ranges using App Service IP restrictions.
-Monitoring:
-Integrated with Application Insights for real-time performance and error monitoring.
-Logs are sent to a centralized Log Analytics Workspace.
+VNet Integration: Deployed in the frontend-subnet of a shared VNet.
+                  Integrated with the Microsoft.Web service endpoint, ensuring secure private communication with other Azure services.
+Access Control: Public access is restricted to specific IP ranges using App Service IP restrictions.
+Monitoring: Integrated with Application Insights for real-time performance and error monitoring.
+            Logs are sent to a centralized Log Analytics Workspace.
 
-# 2. Backend Tier
+**2. Backend Tier**
 Service: Azure Function App.
 Role: Handles application logic and APIs for the frontend.
-VNet Integration:
-Deployed in the backend-subnet (address space: 10.0.0.64/26) of the same VNet.
-Integrated with the Microsoft.Sql service endpoint, ensuring private communication with the database.
-Uses service delegation to Microsoft.Web/serverFarms for secure subnet integration.
-Data Storage:
-Leverages an Azure Storage Account for durable function execution and runtime data storage.
-Monitoring:
-Connected to Application Insights for detailed telemetry.
-Logs are aggregated in the Log Analytics Workspace.
+VNet Integration: Deployed in the backend-subnet (address space: 10.0.0.64/26) of the same VNet.
+                  Integrated with the Microsoft.Sql service endpoint, ensuring private communication with the database.
+                  Uses service delegation to Microsoft.Web/serverFarms for secure subnet integration.
+Data Storage: Leverages an Azure Storage Account for durable function execution and runtime data storage.
+Monitoring: Connected to Application Insights for detailed telemetry.
+            Logs are aggregated in the Log Analytics Workspace.
 
-# 3. Database Tier
+**3. Database Tier**
 Service: Azure SQL Database.
 Role: Stores application data securely.
-Network Security:
-Connected privately through a Service Endpoint configured in the backend-subnet.
-Public access is disabled, ensuring all traffic to the database remains internal.
-Secrets Management:
-Connection strings are securely stored and retrieved from Azure Key Vault.
-
+Network Security: Connected privately through a Service Endpoint configured in the backend-subnet.
+                Public access is disabled, ensuring all traffic to the database remains internal.
+Secrets Management: Connection strings are securely stored and retrieved from Azure Key Vault.
 
 ![](./assets/architecture.jpg)
 
