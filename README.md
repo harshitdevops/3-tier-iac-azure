@@ -3,7 +3,7 @@
 # Overview of the 3-Tier Architecture
 This architecture represents a secure, scalable deployment for modern applications in Azure, consisting of Frontend (Presentation), Backend (Application Logic), and Database (Data) tiers, all integrated into a Virtual Network (VNet). It is provisioned using Terraform for infrastructure as code.
 
-1. Frontend Tier
+# 1. Frontend Tier
 Service: Azure App Service (Web App).
 Role: Serves the user interface of the application.
 VNet Integration:
@@ -15,7 +15,7 @@ Monitoring:
 Integrated with Application Insights for real-time performance and error monitoring.
 Logs are sent to a centralized Log Analytics Workspace.
 
-2. Backend Tier
+# 2. Backend Tier
 Service: Azure Function App.
 Role: Handles application logic and APIs for the frontend.
 VNet Integration:
@@ -28,7 +28,7 @@ Monitoring:
 Connected to Application Insights for detailed telemetry.
 Logs are aggregated in the Log Analytics Workspace.
 
-3. Database Tier
+# 3. Database Tier
 Service: Azure SQL Database.
 Role: Stores application data securely.
 Network Security:
