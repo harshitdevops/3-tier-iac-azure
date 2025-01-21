@@ -1,6 +1,9 @@
 # Overview of the 3-Tier Architecture
 This architecture represents a secure, scalable deployment for modern applications in Azure, consisting of Frontend (Presentation), Backend (Application Logic), and Database (Data) tiers, all integrated into a Virtual Network (VNet). It is provisioned using Terraform for infrastructure as code.
+
+
 ![](./assets/architecture.jpg)
+
 
 **1. Frontend Tier**\
 **Service:** Azure App Service (Web App).\
