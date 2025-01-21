@@ -46,3 +46,29 @@ resource "azurerm_mssql_database" "ok-database" {
   }
 }
 
+#Create Key Vault Secret
+resource "azurerm_key_vault_secret" "sqladminpassword" {
+  # checkov:skip=CKV_AZURE_41:Expiration not needed 
+  name         = "sqladmin"
+  value        = random_password.randompassword.result
+  key_vault_id = azurerm_key_vault.ok-keyvault.id
+  content_type = "text/plain"
+  depends_on = [
+    azurerm_key_vault.ok-keyvault,
+    azurerm_key_vault_access_policy.kv_access_policy_sc,
+    azurerm_key_vault_access_policy.kv_access_policy_me,
+    azurerm_key_vault_access_policy.kv_access_policy_web_app
+  ]
+}
+
+resource "azurerm_key_vault_secret" "sqldb_cnxn" {
+  name         = "sqldbconstring"
+  value        = "Driver={ODBC Driver 18 for SQL Server};Server=tcp:ok-sqldb-prod.database.windows.net,1433;Database=ok-db;Uid=UserAdm!n24;Pwd=${random_password.randompassword.result};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+  key_vault_id = azurerm_key_vault.ok-keyvault.id
+  depends_on = [
+    azurerm_key_vault.ok-keyvault,
+    azurerm_key_vault_access_policy.kv_access_policy_sc,
+    azurerm_key_vault_access_policy.kv_access_policy_me,
+    azurerm_key_vault_access_policy.kv_access_policy_web_app
+  ]
+}

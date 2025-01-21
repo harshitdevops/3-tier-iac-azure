@@ -39,6 +39,14 @@ resource "azurerm_linux_web_app" "frontend-webapp" {
   depends_on = [
     azurerm_service_plan.frontend-asp, azurerm_application_insights.ok-appinsights
   ]
+
+  lifecycle {
+    ignore_changes = [
+      virtual_network_subnet_id,
+      app_settings["APPINSIGHTS_INSTRUMENTATIONKEY"]
+    ]
+  }
+
 }
 
 #Backend
@@ -89,6 +97,13 @@ resource "azurerm_linux_function_app" "backend-fnapp" {
   depends_on = [
     azurerm_storage_account.fn-storageaccount
   ]
+
+  lifecycle {
+    ignore_changes = [
+      virtual_network_subnet_id,
+      app_settings["APPINSIGHTS_INSTRUMENTATIONKEY"]
+    ]
+  }
 }
 
 #vnet integration of backend functions
