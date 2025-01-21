@@ -13,6 +13,13 @@ resource "azurerm_linux_web_app" "frontend-webapp" {
     application_stack {
       node_version = "20-lts" # Version 20 long term support
     }
+
+    ip_restriction {
+      action     = "Allow"
+      ip_address = "0.0.0.0/0" # Allows all IPs
+      name       = "allow-all-demo"
+      priority   = 100
+    }
   }
 
   #App Settings for Application insight
@@ -89,7 +96,8 @@ resource "azurerm_app_service_virtual_network_swift_connection" "be-vnet-integra
   app_service_id = azurerm_linux_function_app.backend-fnapp.id
   subnet_id      = azurerm_subnet.backend-subnet.id
   depends_on = [
-    azurerm_linux_function_app.backend-fnapp
+    azurerm_linux_function_app.backend-fnapp,
+    azurerm_subnet.backend-subnet
   ]
 }
 
@@ -99,6 +107,7 @@ resource "azurerm_app_service_virtual_network_swift_connection" "frontend-vnet-i
   subnet_id      = azurerm_subnet.frontend-subnet.id
 
   depends_on = [
-    azurerm_linux_web_app.frontend-webapp
+    azurerm_linux_web_app.frontend-webapp,
+    azurerm_subnet.frontend-subnet
   ]
 }
